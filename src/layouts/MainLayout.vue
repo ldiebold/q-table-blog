@@ -6,17 +6,17 @@
           flat
           dense
           round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
+          icon="home"
+          aria-label="Home"
+          to="/"
         />
 
         <q-toolbar-title>
           <a
             style="text-decoration: none;"
-            href="/#/"
+            href="/"
             class="text-white"
-          >Quasar App</a>
+          >QTable!</a>
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>

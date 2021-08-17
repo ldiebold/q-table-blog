@@ -11,41 +11,15 @@
       <q-table
         v-model:selected="selected"
         selection="single"
-        :rows="[
-          {
-            id: 1,
-            name: 'Panda',
-            email: 'panda@chihuahua.com',
-            age: 6
-          },
-          {
-            id: 2,
-            name: 'Lily',
-            email: 'lily@chihuahua.com',
-            age: 5
-          }
-        ]"
+        :rows="rows"
         row-key="id"
       />
 
       <!-- Customizing The Selection Component -->
       <q-table
         v-model:selected="selected"
-        selection="single"
-        :rows="[
-          {
-            id: 1,
-            name: 'Panda',
-            email: 'panda@chihuahua.com',
-            age: 6
-          },
-          {
-            id: 2,
-            name: 'Lily',
-            email: 'lily@chihuahua.com',
-            age: 5
-          }
-        ]"
+        selection="multiple"
+        :rows="rows"
         row-key="id"
       >
         <template #header-selection="scope">
@@ -68,7 +42,32 @@ export default {
   setup () {
     const selected = ref()
 
+    const rows = [
+      {
+        id: 1,
+        name: 'Panda',
+        email: 'panda@chihuahua.com',
+        age: 6
+      },
+      {
+        id: 2,
+        name: 'Lily',
+        email: 'lily@chihuahua.com',
+        age: 5
+      }
+    ]
+
+    const columns = [
+      { label: 'expand', name: 'expand', field: 'expand' },
+      { label: 'id', field: 'id', name: 'id' },
+      { label: 'name', field: 'name', name: 'name' },
+      { label: 'email', field: 'email', name: 'email' },
+      { label: 'age', field: 'age', name: 'age' }
+    ]
+
     return {
+      rows,
+      columns,
       selected
     }
   }
