@@ -11,44 +11,17 @@
         <!-- Basic Loading State -->
         <q-table
           :loading="true"
-          :rows="[
-            {
-              id: 1,
-              name: 'Panda',
-              email: 'panda@chihuahua.com',
-              age: 6
-            },
-            {
-              id: 2,
-              name: 'Lily',
-              email: 'lily@chihuahua.com',
-              age: 5
-            }
-          ]"
+          color="primary"
         />
 
         <!-- Inner Loading State (untouchable!) -->
         <q-table
           :loading="true"
-          :rows="[
-            {
-              id: 1,
-              name: 'Panda',
-              email: 'panda@chihuahua.com',
-              age: 6
-            },
-            {
-              id: 2,
-              name: 'Lily',
-              email: 'lily@chihuahua.com',
-              age: 5
-            }
-          ]"
         >
           <template #loading>
             <q-inner-loading
               showing
-              color="primary"
+              color="secondary"
             />
           </template>
         </q-table>
@@ -58,7 +31,34 @@
 </template>
 
 <script>
-export default {
-  // name: 'PageName',
-}
+import { defineComponent, ref } from 'vue'
+import axios from 'axios'
+
+export default defineComponent({
+  setup () {
+    const loading = ref(true)
+    const dogs = ref([])
+
+    const columns = [
+      { name: 'name', label: 'Name', field: 'name', align: 'left' },
+      { name: 'age', label: 'Age', field: 'age', align: 'center' },
+      { name: 'email', label: 'Email', field: 'email' }
+    ]
+
+    // Fetch dogs
+    axios.get('https://table.quasarcomponents.com/dogs')
+      .then(response => {
+        dogs.value = response.data.data
+      })
+      .finally(() => {
+        loading.value = false
+      })
+
+    return {
+      columns,
+      loading,
+      dogs
+    }
+  }
+})
 </script>

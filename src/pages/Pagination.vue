@@ -7,9 +7,12 @@
       class="full-width q-gutter-xl"
     >
       <q-table
+        v-model:pagination="pagination"
+        :rows-per-page-options="[3, 5, 10, 0]"
         color="secondary"
         :loading="loading"
-        :rows="posts"
+        :rows="dogs"
+        :columns="columns"
       />
     </div>
   </q-page>
@@ -22,19 +25,34 @@ import axios from 'axios'
 export default defineComponent({
   setup () {
     const loading = ref(true)
-    const posts = ref([])
+    const dogs = ref([])
+    const pagination = ref({
+      sortBy: 'name',
+      descending: false,
+      page: 1,
+      rowsPerPage: 3
+    })
 
-    axios.get('https://jsonplaceholder.typicode.com/posts')
+    const columns = [
+      { name: 'name', label: 'Name', field: 'name', align: 'left', sortable: true },
+      { name: 'age', label: 'Age', field: 'age', align: 'center' },
+      { name: 'email', label: 'Email', field: 'email' }
+    ]
+
+    // Fetch dogs
+    axios.get('https://table.quasarcomponents.com/dogs')
       .then(response => {
-        posts.value = response.data
+        dogs.value = response.data.data
       })
       .finally(() => {
         loading.value = false
       })
 
     return {
+      columns,
       loading,
-      posts
+      dogs,
+      pagination
     }
   }
 })
